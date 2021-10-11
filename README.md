@@ -53,6 +53,7 @@ Methods: We might be able to match the dbVar and gnomAD-SV variants by variant I
 
 
 ## Installation
+GeneVar-2 is available on GitHub (https://github.com/collaborativebioinformatics/GeneVar2). The repository provides detailed instructions for tool usage and installation. 
 
 
 
