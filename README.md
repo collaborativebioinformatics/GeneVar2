@@ -6,13 +6,13 @@ LOGO
 
 ## Contributors
 
-1. Tim Hefferon (Leader & Liaison)
-2. Ahmed (Writer and Guide)
-3. Rupesh Kesharwani (Sysadmin and code developer)
-4. Divya Kalra (Sysadmin and code developer)
-5. Kimberly Walker (Writer)
-6. Priya lakra (code developer)
-7. Jianzhi/Quentin (QC checker) 
+1. Tim Hefferon `(Leader & Liaison)`
+2. Ahmad Al Khleifat `(Writer and Guide)`
+3. Rupesh Kesharwani `(Sysadmin and code developer)`
+4. Divya Kalra `(Sysadmin and code developer)`
+5. Kimberly Walker `(Writer)`
+6. Priya lakra `(code developer)`
+7. Jianzhi/Quentin `(QC checker)` 
 
 
 ## Goals
