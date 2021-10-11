@@ -50,6 +50,24 @@ Going further: extract frequency in super-populations in column: af_AFR, etc.
 Going even further: match SVs from other studies with gnomAD-SV and annotate their frequency
 Methods: We might be able to match the dbVar and gnomAD-SV variants by variant ID. Otherwise very stringent overlapping of the two should be able to match the variants. We might need to use the hg19 version to match the original gnomAD-SV data to dbVar variants, and then make the connection to GRCh38 variants from dbVar (by variant ID).
 
+Annotate overlap with clinically-relevant SVs
+
+Input:
+All dbVar SVs or subset of SVs for one gene (using SV<->gene link computed above).
+ClinGen or pathogenic SVs from ClinVar, etc
+Output:
+TSV with variant_id and TRUE/FALSE columns about their overlap. E.g. pathogenic_clinvar_sv.
+Methods: Use either a simple overlap (any base overlapping) or reciprocal overlap (typically 50%).
+
+Annotate overlap with clinically-relevant SNVs/indels
+
+Input:
+All dbVar SVs or subset of SVs for one gene (using SV<->gene link computed above).
+ClinGen or pathogenic SNV/indels from ClinVar, etc
+Output:
+TSV with variant_id and TRUE/FALSE columns about their overlap. E.g. pathogenic_clinvar_sv.
+Methods: Use either a simple overlap (any base overlapping) or reciprocal overlap (typically 50%).
+
 
 
 ## Installation
