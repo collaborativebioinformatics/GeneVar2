@@ -2,7 +2,7 @@
 
 Enhancement of GeneVar app
 
-LOGO
+![](logo_GeneVar2.jpg)
 
 ## Contributors
 
