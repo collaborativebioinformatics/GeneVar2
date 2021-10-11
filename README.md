@@ -2,7 +2,8 @@
 
 Enhancement of GeneVar app
 
-![](logo_size.jpg)
+![]()![VectorEPS_ByTailorBrands_v2](https://user-images.githubusercontent.com/41301333/136847583-fa82b8ec-6762-461f-be20-b4fec6d23561.jpg)
+
 
 ## Contributors
 
