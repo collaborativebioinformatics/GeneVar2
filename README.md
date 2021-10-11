@@ -18,7 +18,10 @@ Enhancement of GeneVar app
 
 ## Goals
 
-Integration of two apps (Clinical_SV and GeneVar) that can work together, Eventually enhanced the feature of exisiting GeneVar features.
+GeneVar, an open access, gene centric data browser for SV analysis. GeneVar takes as input a gene name or ID and produces a report that informs the user of all SVs overlapping the gene and any non-coding regulatory elements affecting expression of the gene. GeneVar-2 tool is intended to have a clinical focus, informing the interpretation of SV pertaining to a gene name. In addaation GeneVar-2 gives the user the option to upload genotyping data and produces a report, file, and genome browser session that informs the user of all structural variants overlapping the gene, including any non-coding regulatory elements affecting expression of the gene.
+
+
+GeneVar-2 is a results of integration of two apps (Clinical_SV and GeneVar) that can work together to facilitate reporting of structural variations data.
 
 
 ## Description
@@ -31,7 +34,20 @@ This is a new version of GeneVar, a previously released app. The software will n
 ![](GeneVar2-workflow.png)
 
 
-## Notes/Documentation
+## How it works
+
+Annotate allele frequency
+
+Input:
+All dbVar SVs or subset of SVs for one gene (using SV<->gene link computed above).
+gnomAD-SV VCF or BED file with allele frequency information
+
+Output:
+TSV with at least two columns: variant_id, af.
+Only for variants that were matched with the gnomAD-SV data.
+Going further: extract frequency in super-populations in column: af_AFR, etc.
+Going even further: match SVs from other studies with gnomAD-SV and annotate their frequency
+Methods: We might be able to match the dbVar and gnomAD-SV variants by variant ID. Otherwise very stringent overlapping of the two should be able to match the variants. We might need to use the hg19 version to match the original gnomAD-SV data to dbVar variants, and then make the connection to GRCh38 variants from dbVar (by variant ID).
 
 
 
