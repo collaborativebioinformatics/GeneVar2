@@ -14,6 +14,7 @@ Enhancement of GeneVar app
 5. Kimberly Walker `(Writer)`
 6. Priya lakra `(code developer)`
 7. Jianzhi/Quentin `(QC checker)` 
+8. Jean Monlong `(Sysadmin and code developer)`
 
 
 ## Goals
