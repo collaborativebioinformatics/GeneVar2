@@ -40,6 +40,7 @@ Annotate allele frequency
 
 Input:
 All dbVar SVs or subset of SVs for one gene (using SV<->gene link computed above).
+
 gnomAD-SV VCF or BED file with allele frequency information
 
 Output:
