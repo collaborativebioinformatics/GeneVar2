@@ -11,9 +11,10 @@
 4. Divya Kalra `(Sysadmin and code developer)`
 5. Kimberly Walker `(Writer)`
 6. Priya Lakra `(Code developer)`
-7. Jianzhi(Quentin) `(QC checker)` 
+7. Jianzhi(Quentin) Yang `(QC checker)` 
 8. Jean Monlong `(Sysadmin and code developer)`
-
+9. David Kenke
+10. Weiyu Zhou
 
 ## Goals
 
