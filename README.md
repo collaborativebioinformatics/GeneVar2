@@ -60,6 +60,7 @@ Additionally the following plots will be available for download:
 ## Installation
 
 ```r
+install.packages("easypackages")
 if(!"easypackages" %in% row.names(installed.packages())){
   install.packages("BiocManager", repos = "https://cloud.r-project.org")
   library(easypackages, character.only = TRUE, quietly = TRUE)
@@ -91,7 +92,7 @@ Then the master annotation script can read a VCF, *source* these functions and u
 See the current master annotation script [`annotate_vcf.R`](R/annotate_vcf.R) and the different scripts *source*d inside.
 
 
-```
+```r
 Rscript annotate_vcf.R test.input.vcf annotation_data.RData test.output.vcf test.output.csv
 ```
 
@@ -100,7 +101,7 @@ Rscript annotate_vcf.R test.input.vcf annotation_data.RData test.output.vcf test
 This module supports the enrichment analysis of Disease Ontology (DO) (Schriml et al. 2011), Network of Cancer Gene (A. et al. 2016) and Disease Gene Network (DisGeNET) (Janet et al. 2015). In addition, several visualization methods were provided by enrichplot to help interpreting enrichment and disease ontology results.
 
 
-```
+```r
 Rscript GeneAnnotationFromCSV.R test.output.vcf 0.05 (pvalueCutoff) DUP (svtype) chr12 (Chromosome)
 ```
 
