@@ -51,6 +51,7 @@ The profile of the SV to consider, such as type and size range, can be specified
 A) Allele Frequency: For variants found in gnomAD-SV, allele frequency for available populations will be annotated.
 B) ClinVar Information: Pathogenic SVs, SNVs and Indels from ClinVar that overlap with called SVs will be annotated.
 
+Need to add verbiage explaining graphs
 
 
 Previous text (leaving for now in case I missed something):
