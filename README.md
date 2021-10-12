@@ -85,6 +85,5 @@ An example of chr12 and DUP svtype
 ![](PathwaysCompare.png)
 
 
-![](table.png)
 
 
