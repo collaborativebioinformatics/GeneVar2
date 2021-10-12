@@ -61,6 +61,7 @@ Need to add verbiage explaining graphs
 ## Installation
 
 ```r
+install.packages("easypackages")
 if(!"easypackages" %in% row.names(installed.packages())){
   install.packages("BiocManager", repos = "https://cloud.r-project.org")
   library(easypackages, character.only = TRUE, quietly = TRUE)
