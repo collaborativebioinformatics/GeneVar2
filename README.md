@@ -77,7 +77,8 @@ GeneVar2 is available on GitHub (https://github.com/collaborativebioinformatics/
 
 The results obtained from previous step used to perform the gene and disease ontology analysis. The user can choose chr and cvtype to plot these.
 
-An example of chr12 and DUP svtype
+## An example of chr12 and DUP svtype
+
 
 ![](genesDiseaseOntology.png)
 
