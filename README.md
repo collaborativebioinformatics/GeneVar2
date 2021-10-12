@@ -12,7 +12,7 @@ Enhancement of GeneVar app
 3. Rupesh Kesharwani `(Sysadmin and code developer)`
 4. Divya Kalra `(Sysadmin and code developer)`
 5. Kimberly Walker `(Writer)`
-6. Priya lakra `(code developer)`
+6. Priya Lakra `(Code developer)`
 7. Jianzhi(Quentin) `(QC checker)` 
 8. Jean Monlong `(Sysadmin and code developer)`
 
