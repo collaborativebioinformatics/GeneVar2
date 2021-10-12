@@ -70,7 +70,7 @@ GeneVar2 is available on GitHub (https://github.com/collaborativebioinformatics/
 
 Rscript annotate_vcf.R test.input.vcf annotation_data.RData test.output.vcf test.output.csv
 
-Rscript GeneAnnotationFromCSV.R test.output.vcf 0.05 (pvalueCutoff)
+Rscript GeneAnnotationFromCSV.R test.output.vcf 0.05 (pvalueCutoff) DUP (svtype) chr12 (Chromosome)
 
 ## Test data
 
