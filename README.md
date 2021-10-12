@@ -46,7 +46,7 @@ GeneVar2 is a web page application.  Users have two ways of interacting with the
 
 The profile of the SV to consider, such as type and size range, can be specified on the side bar. Each column in the dynamic table can be "searched" into or reorder dynamically. All data used by the app will be available for download in tab-delimited files. By default, allele frequency is reported based on gnomAD genomes and exomes.
 
-2) Upload a vcf file:After uploading their own structural variant vcf file, the application will annotate each SV with the following annotation:
+2) Upload a vcf file:After users upload their own structural variant vcf file, the application will annotate each SV with the following annotation:
 
 A) Allele Frequency: For variants found in gnomAD-SV, allele frequency for available populations will be annotated.
 B) ClinVar Information: Pathogenic SVs, SNVs and Indels from ClinVar that overlap with called SVs will be annotated.
@@ -76,7 +76,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     BiocManager::install('jmonlong/sveval')
 ```
 
-## Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
+# Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
 
 
 ## Quick Start
