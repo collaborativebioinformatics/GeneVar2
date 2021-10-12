@@ -13,8 +13,8 @@
 6. Priya Lakra `(Code developer)`
 7. Jianzhi(Quentin) Yang `(QC checker)` 
 8. Jean Monlong `(Sysadmin and code developer)`
-9. David Kenke
-10. Weiyu Zhou
+9. David Kenke `(Writer and Guide)`
+10. Weiyu Zhou (`App developer`)
 
 ## Goals
 
