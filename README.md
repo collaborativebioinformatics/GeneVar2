@@ -58,6 +58,7 @@ Additionally the following plots will be available for download:
 
 
 ## Installation
+For users interested in annotating their vcf files themselves, we provide the following R scripts:
 
 ```r
 install.packages("easypackages")
@@ -76,7 +77,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     BiocManager::install('jmonlong/sveval')
 ```
 
-### Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
+#### Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
 
 
 ## Quick Start
