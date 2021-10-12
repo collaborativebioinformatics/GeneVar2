@@ -37,7 +37,7 @@ The aim of this project is to merge the functionality of GeneVar and Clinical_SV
 
 GeneVar2 is a web page application.  Users have two ways of interacting with the tool depending on what their input is.
 
-1) Individual or small list of genes: After entering the gene name (HGNC, Ensembl gene (ENSG), or transcript (ENST) identifier) in the search box on the homepage, you will be directed to the gene-specific page containing:
+1) Enter individual genes: After entering the gene name (HGNC, Ensembl gene (ENSG), or transcript (ENST) identifier) in the search box on the homepage, you will be directed to the gene-specific page containing:
 
     Gene-level summary with number of SVs, number of clinival SVs or SVs overlapping clinical SNVs.
     Links to the gene's page on OMIM, GTEx, gnomAD.
@@ -51,49 +51,18 @@ The profile of the SV to consider, such as type and size range, can be specified
 A) Allele Frequency: For variants found in gnomAD-SV, allele frequency for available populations will be annotated.
 B) ClinVar Information: Pathogenic SVs, SNVs and Indels from ClinVar that overlap with called SVs will be annotated.
 
+In addition a number of tables will be provided for download.  These tables include:
+need a list of tables so I can describe them here.
+
+Additionally the following plots will be available for download:
 Need to add verbiage explaining graphs
 
 
-Previous text (leaving for now in case I missed something):
-
-Annotate allele frequency
-
-Input:
-All dbVar SVs or subset of SVs for one gene (using SV<->gene link computed above).
-
-gnomAD-SV VCF file with allele frequency information
-
-Output:
-TSV with at least two columns: variant_id, af.
-Only for variants that were matched with the gnomAD-SV data.
-Going further: extract frequency in super-populations in column: af_AFR, etc.
-Going even further: match SVs from other studies with gnomAD-SV and annotate their frequency
-Methods: We might be able to match the dbVar and gnomAD-SV variants by variant ID. Otherwise very stringent overlapping of the two should be able to match the variants. We might need to use the hg19 version to match the original gnomAD-SV data to dbVar variants, and then make the connection to GRCh38 variants from dbVar (by variant ID).
-
-Annotate overlap with clinically-relevant SVs
-
-Input:
-All dbVar SVs or subset of SVs for one gene (using SV<->gene link computed above).
-ClinGen or pathogenic SVs from ClinVar, etc
-
-Output:
-TSV with variant_id and TRUE/FALSE columns about their overlap. E.g. pathogenic_clinvar_sv.
-Methods: Use either a simple overlap (any base overlapping) or reciprocal overlap (typically 50%).
-
-Annotate overlap with clinically-relevant SNVs/indels
-
-Input:
-All dbVar SVs or subset of SVs for one gene (using SV<->gene link computed above).
-ClinGen or pathogenic SNV/indels from ClinVar, etc
-
-Output:
-TSV with variant_id and TRUE/FALSE columns about their overlap. E.g. pathogenic_clinvar_sv.
-Methods: Use either a simple overlap (any base overlapping) or reciprocal overlap (typically 50%).
-
-
-
 ## Installation
-GeneVar-2 is available on GitHub (https://github.com/collaborativebioinformatics/GeneVar2). The repository provides detailed instructions for tool usage and installation. 
+Add installation instruction here
+
+Add this sentence to the paper
+GeneVar2 is available on GitHub (https://github.com/collaborativebioinformatics/GeneVar2). The repository provides detailed instructions for tool usage and installation. 
 
 
 
