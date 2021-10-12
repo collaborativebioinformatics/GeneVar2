@@ -19,10 +19,9 @@ Enhancement of GeneVar app
 
 ## Goals
 
-GeneVar, an open access, gene centric data browser for SV analysis. GeneVar takes as input a gene name or ID and produces a report that informs the user of all SVs overlapping the gene and any non-coding regulatory elements affecting expression of the gene. GeneVar-2 tool is intended to have a clinical focus, informing the interpretation of SV pertaining to a gene name. In addaation GeneVar-2 gives the user the option to upload genotyping data and produces a report, file, and genome browser session that informs the user of all structural variants overlapping the gene, including any non-coding regulatory elements affecting expression of the gene.
+GeneVar is an open access, gene centric data browser for SV analysis. GeneVar takes as input a gene name or ID and produces a report that informs the user of all SVs overlapping the gene and any non-coding regulatory elements affecting expression of the gene. Clinical_SV is an open access software that can annotate vcf files with clinically relavant information as well as provide useful visualizations such as disease ontology plots.
 
-
-GeneVar-2 is a results of integration of two apps (Clinical_SV and GeneVar) that can work together to facilitate reporting of structural variations data.
+GeneVar-2 is the integration of these two apps which work together to facilitate reporting of structural variations data. GeneVar-2 tool is intended to have a clinical focus, informing the interpretation of SV pertaining to a gene name. In addition, GeneVar-2 gives the user the option to upload genotyping data and produces a report, file, and genome browser session that informs the user of all structural variants overlapping the gene, including any non-coding regulatory elements affecting expression of the gene.
 
 
 ## Description
