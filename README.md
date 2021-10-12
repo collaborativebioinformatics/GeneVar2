@@ -76,7 +76,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     BiocManager::install('jmonlong/sveval')
 ```
 
-# Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
+### Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
 
 
 ## Quick Start
