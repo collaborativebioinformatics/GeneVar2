@@ -35,6 +35,20 @@ The aim of this project is to merge the functionality of GeneVar and Clinical_SV
 
 ## How it works
 
+GeneVar2 is a web page application.  Users have two ways of interacting with the tool depending on what their input is.
+
+1) Individual or small list of genes: After entering the gene name (HGNC, Ensembl gene (ENSG), or transcript (ENST) identifier) in the search box on the homepage, you will be directed to the gene-specific page containing:
+
+    Gene-level summary with number of SVs, number of clinival SVs or SVs overlapping clinical SNVs.
+    Links to the gene's page on OMIM, GTEx, gnomAD.
+    A dynamic table with the annotated variants overlapping the gene.
+    A graph with the distribution of the allele frequency for variants matched with gnomAD-SV (50% reciprocal overlap).
+
+The profile of the SV to consider, such as type and size range, can be specified on the side bar. Each column in the dynamic table can be "searched" into or reorder dynamically. All data used by the app will be available for download in tab-delimited files. By default, allele frequency is reported based on gnomAD genomes and exomes.
+
+2) Upload a vcf file:
+
+
 Annotate allele frequency
 
 Input:
