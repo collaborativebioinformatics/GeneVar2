@@ -68,14 +68,22 @@ GeneVar2 is available on GitHub (https://github.com/collaborativebioinformatics/
 
 ## Quick Start
 
+Rscript annotate_vcf.R test.input.vcf annotation_data.RData test.output.vcf test.output.csv
 
+Rscript GeneAnnotationFromCSV.R test.output.vcf 0.05 (pvalueCutoff)
 
 ## Test data
 
+test.input.vcf
 
 ## Results
 
-The results obtained from previous step used to perform the gene and disease ontology analysis. The user can choose chr and cvtype to plot these.
+1. Annotated SV VCF (test.output.vcf) and a CSV (test.output.csv) with clinically relevant ID and RANK
+
+![](Results-Table1.png)
+
+
+2. The results obtained from previous step used to perform the gene and disease ontology analysis. The user can choose chr and cvtype to plot these.
 
 ## An example of chr12 and DUP svtype
 
