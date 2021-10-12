@@ -18,7 +18,7 @@
 
 ## Goals
 
-[GeneVar](https://github.com/collaborativebioinformatics/GeneVar) is an open access, gene centric data browser for SV analysis. GeneVar takes as input a gene name or ID and produces a report that informs the user of all SVs overlapping the gene and any non-coding regulatory elements affecting expression of the gene. [Clinical SV](https://github.com/collaborativebioinformatics/clinical_SVs) is an open access software that can annotate vcf files with clinically relavant information as well as provide useful visualizations such as disease ontology plots.
+GeneVar is an open access, gene centric data browser for SV analysis. GeneVar takes as input a gene name or ID and produces a report that informs the user of all SVs overlapping the gene and any non-coding regulatory elements affecting expression of the gene. Clinical_SV is an open access software that can annotate vcf files with clinically relavant information as well as provide useful visualizations such as disease ontology plots.
 
 GeneVar2 is the integration of these two apps which work together to facilitate reporting of structural variations data. GeneVar2 tool is intended to have a clinical focus, informing the interpretation of SV pertaining to a gene name. In addition, GeneVar2 gives the user the option to upload genotyping data and produces a report, file, and genome browser session that informs the user of all structural variants overlapping the gene, including any non-coding regulatory elements affecting expression of the gene.
 
@@ -59,18 +59,52 @@ Need to add verbiage explaining graphs
 
 
 ## Installation
-Add installation instruction here
 
-Add this sentence to the paper
-GeneVar2 is available on GitHub (https://github.com/collaborativebioinformatics/GeneVar2). The repository provides detailed instructions for tool usage and installation. 
+```r
+if(!"easypackages" %in% row.names(installed.packages())){
+  install.packages("BiocManager", repos = "https://cloud.r-project.org")
+  library(easypackages, character.only = TRUE, quietly = TRUE)
+}
+pkgs=c("shiny","tippy","shinythemes", "tidyverse", "tidygraph", "clusterProfiler","org.Hs.eg.db","DOSE","ggnewscale","cowplot","tidyverse","plyr","ReactomePA","reactome.db","reactome.db", 
+"KEGG.db","enrichplot","dplyr","GenomicRanges", "rtracklayer", "VariantAnnotation", "tidyr")
+suppressWarnings(suppressMessages(easypackages::packages(pkgs, prompt = FALSE)))
+```
 
+```r
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+    BiocManager::install('jmonlong/sveval')
+```
+
+## Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
 
 
 ## Quick Start
 
-Rscript annotate_vcf.R test.input.vcf annotation_data.RData test.output.vcf test.output.csv
+### SV calling
 
+If needed SVs can be called using parliament2 (https://github.com/dnanexus/parliament2).
+
+### Annotation of SVs in R
+
+The different modules of the annotation are written as functions and saved in separate files.
+Then the master annotation script can read a VCF, *source* these functions and use them to annotate the SVs. 
+See the current master annotation script [`annotate_vcf.R`](R/annotate_vcf.R) and the different scripts *source*d inside.
+
+
+```
+Rscript annotate_vcf.R test.input.vcf annotation_data.RData test.output.vcf test.output.csv
+```
+
+### Gene/Diesease ontology and Pathways analysis and plotting
+
+This module supports the enrichment analysis of Disease Ontology (DO) (Schriml et al. 2011), Network of Cancer Gene (A. et al. 2016) and Disease Gene Network (DisGeNET) (Janet et al. 2015). In addition, several visualization methods were provided by enrichplot to help interpreting enrichment and disease ontology results.
+
+
+```
 Rscript GeneAnnotationFromCSV.R test.output.vcf 0.05 (pvalueCutoff) DUP (svtype) chr12 (Chromosome)
+```
+
 
 ## Test data
 
@@ -78,7 +112,25 @@ test.input.vcf
 
 ## Results
 
-1. Annotated SV VCF (test.output.vcf) and a CSV (test.output.csv) with clinically relevant ID and RANK
+1A. Annotated SV VCF (test.output.vcf) 
+
+1B. CSV (test.output.csv) with clinically relevant ID and RANK
+
+The table contains the following columns.
+
+| name       | description                                                           |
+|------------|-----------------------------------------------------------------------|
+| gene       | names of genes overlapped, separated by `\|`                          |
+| variant_id | SV ID                                                                 |
+| chr        | chromosome name                                                       |
+| start      | start position                                                        |
+| end        | end position                                                          |
+| size       | size of the SV in bp                                                  |
+| frequency  | allele frequency                                                      |
+| svtype     | type of SV. E.g. DEL, DUP, INS, ...                                   |
+| clinsv     | dbVar accession IDs of matching known clinical SVs (separated by `\|` |
+| clinrk     | clinical importance rank, for example to select top 5 SVs             |
+
 
 ![](Results-Table1.png)
 
@@ -95,4 +147,12 @@ test.input.vcf
 
 
 ![](Table-results.png)
+
+
+## Citation
+
+GeneVar2 is available on GitHub (https://github.com/collaborativebioinformatics/GeneVar2). The repository provides detailed instructions for tool usage and installation. 
+
+
+## References
 
