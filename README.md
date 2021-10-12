@@ -31,7 +31,7 @@ The aim of this project is to merge the functionality of GeneVar and Clinical_SV
 
 ## Overview Diagram
 
-![](GeneVar2-workflow.png)
+![](GeneVar2_workflow_v2.png)
 
 
 ## How it works
