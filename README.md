@@ -154,6 +154,6 @@ GeneVar2 is available on GitHub (https://github.com/collaborativebioinformatics/
 
 
 ## References
-GeneVar: https://github.com/collaborativebioinformatics/GeneVar
-Clinical SV: https://github.com/collaborativebioinformatics/clinical_SVs 
-Parliament2: https://github.com/fritzsedlazeck/parliament2
+- GeneVar: https://github.com/collaborativebioinformatics/GeneVar
+- Clinical SV: https://github.com/collaborativebioinformatics/clinical_SVs 
+- Parliament2: https://github.com/fritzsedlazeck/parliament2
