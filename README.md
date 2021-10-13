@@ -124,6 +124,9 @@ mv *.tsv ../myoutput
 mv *.png ../myoutput
 ```
 
+## Launching the Web Application
+
+GeneVar2 is currently launched as a shiny app on DNAnexus.  The developers used the steps outlined in the  [documentation](https://documentation.dnanexus.com/getting-started/tutorials/developer-tutorials/web-app-let-tutorials/r-shiny-example-web-app). 
 
 ## Test data
 
