@@ -231,6 +231,6 @@ print.go.out(goResults = p[[2]], filename = paste(chrom,svtype,"DGN", sep="_"))
 print.go.out(goResults = p[[3]], filename = paste(chrom,svtype,"ReactomePathway", sep="_"))
 print.go.out(goResults = p[[4]], filename = paste(chrom,svtype,"KEGGPathway", sep="_"))
 ##END
-save(listEntrezID, p, print.go.out, enrichedGene, file = paste(chrom,svtype,"GeneOntology.RData", sep="_"))
+#save(listEntrezID, p, print.go.out, enrichedGene, file = paste(chrom,svtype,"GeneOntology.RData", sep="_"))
 cat("#Done, the results are generated in current dir.\n")
 
