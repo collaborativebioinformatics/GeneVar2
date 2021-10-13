@@ -57,8 +57,7 @@ GeneVar2 is a web page application.  Users have two ways of interacting with the
 In addition a number of tables will be provided for download including Disease Ontology details table and Clinical rank table.
 
 Finally the following plots will be available for download: 
-	- something
-	- something else
+something and something else
 
 
 ## Installation
@@ -81,7 +80,7 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     BiocManager::install('jmonlong/sveval')
 ```
 
-#### Note: Please have a look (https://www.bioconductor.org/packages/release/bioc) for any kind of issues.
+#### Note: For any issues encountered, please review: https://www.bioconductor.org/packages/release/bioc
 
 
 ## Quick Start
