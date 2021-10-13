@@ -6,7 +6,7 @@
 ## Contributors
 
 1. Tim Hefferon `(Leader & Liaison)`
-2. Ahmad Al Khleifat `(Writer and Guide)`
+2. Ahmad Al Khleifat `(Data Guru and Writer)`
 3. Rupesh Kesharwani `(Sysadmin and code developer)`
 4. Divya Kalra `(Sysadmin and code developer)`
 5. Kimberly Walker `(Writer)`
