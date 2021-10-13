@@ -39,26 +39,30 @@ GeneVar2 is a web page application.  Users have two ways of interacting with the
 
 1) Enter individual genes: After entering the gene name (HGNC, Ensembl gene (ENSG), or transcript (ENST) identifier) in the search box on the homepage, you will be directed to the gene-specific page containing:
 
-    Gene-level summary with number of SVs, number of clinival SVs or SVs overlapping clinical SNVs.
-    Links to the gene's page on OMIM, GTEx, gnomAD.
-    A dynamic table with the annotated variants overlapping the gene.
-    A graph with the distribution of the allele frequency for variants matched with gnomAD-SV (50% reciprocal overlap).
+    - Gene-level summary with number of SVs, number of clinival SVs or SVs overlapping clinical SNVs.
+    - Links to the gene's page on OMIM, GTEx, gnomAD.
+    - A dynamic table with the annotated variants overlapping the gene.
+    - A graph with the distribution of the allele frequency for variants matched with gnomAD-SV (50% reciprocal overlap).
 
-The profile of the SV to consider, such as type and size range, can be specified on the side bar. Each column in the dynamic table can be "searched" into or reorder dynamically. All data used by the app will be available for download in tab-delimited files. By default, allele frequency is reported based on gnomAD genomes and exomes.
+    The profile of the SV to consider, such as type and size range, can be specified on the side bar. 
+    Each column in the dynamic table can be "searched" into or reorder dynamically. 
+    All data used by the app will be available for download in tab-delimited files. 
+    By default, allele frequency is reported based on gnomAD genomes and exomes.
 
-2) Upload a vcf file:After users upload their own structural variant vcf file, the application will annotate each SV with the following annotation:
+2) Upload a vcf file: After users upload their own structural variant vcf file, the application will annotate each SV with the following annotation:
 
-A) Allele Frequency: For variants found in gnomAD-SV, allele frequency for available populations will be annotated.
-B) ClinVar Information: Pathogenic SVs, SNVs and Indels from ClinVar that overlap with called SVs will be annotated.
+   - Allele Frequency: For variants found in gnomAD-SV, allele frequency for available populations will be annotated.
+   - ClinVar Information: Pathogenic SVs, SNVs and Indels from ClinVar that overlap with called SVs will be annotated.
 
 In addition a number of tables will be provided for download including Disease Ontology details table and Clinical rank table.
 
-Additionally the following plots will be available for download: 
-
+Finally the following plots will be available for download: 
+	- something
+	- something else
 
 
 ## Installation
-For users interested in annotating their vcf files themselves, we provide the following R scripts:
+For users interested in annotating their own vcf files without using the web application, the following R scripts are available:
 
 ```r
 install.packages("easypackages")
