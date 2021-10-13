@@ -16,6 +16,11 @@
 9. David Henke `(Writer and Guide)`
 10. Weiyu Zhou (`App developer`)
 
+## Motivation
+
+Structural variants represent a major difference between individuals in health and disease. For those outside the immediate field of genetics, a group that includes researchers and clinicians the interpretation of findings is particularly challenging.  GeneVar2 is an extremely fast and computationally efficient platform for analysis, visualization, and interpretation of structural variation data. It is designed to provide a powerful and easy-to-use tool for applications in biomedical research and diagnostic medicine, at no computational cost. Its comprehensive approach brings the analyses of structural variation within the reach of non-specialist laboratories, and those from centres with limited funding available.
+
+
 ## Goals
 
 [GeneVar](https://github.com/collaborativebioinformatics/GeneVar) is an open access, gene centric data browser for SV analysis. GeneVar takes as input a gene name or ID and produces a report that informs the user of all SVs overlapping the gene and any non-coding regulatory elements affecting expression of the gene. [Clinical SV](https://github.com/collaborativebioinformatics/clinical_SVs) is an open access software that can annotate vcf files with clinically relavant information as well as provide useful visualizations such as disease ontology plots.
