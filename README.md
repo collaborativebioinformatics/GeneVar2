@@ -60,8 +60,8 @@ Finally the following plots will be available for download:
 something and something else
 
 
-## Installation
-For users interested in annotating their own vcf files without using the web application, the following R scripts are available:
+## Installation and Quick Start
+For users interested in annotating their own vcf files without using the web application, the following R scripts are available.  First install the required packages in R.
 
 ```r
 install.packages("easypackages")
@@ -80,14 +80,11 @@ if (!requireNamespace("BiocManager", quietly = TRUE))
     BiocManager::install('jmonlong/sveval')
 ```
 
-#### Note: For any issues encountered, please review: https://www.bioconductor.org/packages/release/bioc
-
-
-## Quick Start
+#### Note: For any issues encountered installing these packages, please review: https://www.bioconductor.org/packages/release/bioc
 
 ### SV calling
 
-If needed SVs can be called using parliament2 (https://github.com/dnanexus/parliament2).
+If users first need to call SVs on their samples, the developers recommend Parliament2.  Parliament2 runs a combination of tools to generate structural variant calls on whole-genome sequencing data. It can run the following callers: Breakdancer, Breakseq2, CNVnator, Delly2, Manta, and Lumpy. Because of synergies in how the programs use computational resources, these are all run in parallel. Parliament2 will produce the outputs of each of the tools for subsequent investigation.  See https://github.com/fritzsedlazeck/parliament2 for further details.
 
 ### Annotation of SVs in R
 
