@@ -42,7 +42,7 @@ The aim of this project is to merge the functionality of GeneVar and Clinical_SV
 
 GeneVar2 is a web page application.  Users have two ways of interacting with the tool depending on what their input is.
 
-![](genevar2.mp4)
+https://user-images.githubusercontent.com/313712/137163263-185d984b-c716-4b85-a520-2b813ac70f1d.mp4
 
 1) Enter individual genes: After entering the gene name (HGNC, Ensembl gene (ENSG), or transcript (ENST) identifier) in the search box on the homepage, you will be directed to the gene-specific page containing:
 
