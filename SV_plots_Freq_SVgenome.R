@@ -43,20 +43,24 @@ data_fix$CHROM <- factor(data_fix$CHROM, ordered = TRUE,
                          levels = chr_names)
 # Plot: Allele Freq ####
 allel_freq <- data.frame(table(data_fix$CHROM,data_fix$svtype));colnames(allel_freq) <- c("CHROM","InDel","Freq")
-allel_freq$InDel <- toupper(allel_freq$InDel)
+allel_freq$InDel <- factor(toupper(allel_freq$InDel),c("BND","DEL","DUP","INS"),ordered = T)
+
 alFr_title <- NULL
 
-plt_allelFreq <- ggplot(allel_freq,aes(x=InDel,y=Freq ,fill=InDel))+geom_bar(stat = 'identity')+facet_wrap(.~CHROM,nrow = 1)+
+plt_allelFreq <- ggplot(allel_freq,aes(x=InDel,y=Freq ,fill=InDel))+geom_bar(stat = 'identity')+
+  facet_wrap(.~CHROM,nrow = 1, strip.position = "bottom")+
   labs(x=NULL,y="Count",title=alFr_title)+
-  scale_fill_manual(values=c("red","darkgreen",'blue',"purple"),breaks=c("DEL","DUP","INS","BND"),labels=c("DEL - Deletion","DUP -Duplication","INS - Insertion","BND - Breakends"))+
+  scale_fill_manual(values=c("red","darkgreen",'blue',"purple"),breaks=c("BND","DEL","DUP","INS"),labels=c("BND - Breakends","DEL - Deletion","DUP -Duplication","INS - Insertion"))+
   guides(fill=guide_legend(title="VCF Call"))+
   scale_y_continuous(expand = c(0, 0),labels = label_number(accuracy = 1),breaks=pretty_breaks()) +
-  theme_bw()+theme(strip.background =element_rect(fill="white"),
-                   # axis.line = element_line(colour = "black"),
+  theme_bw()+theme(axis.text.x = element_blank(),
                    panel.grid.minor = element_blank(),
-                   panel.border = element_blank(),
                    panel.background = element_blank(),
-                   axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1)) 
+                   axis.ticks.x = element_blank(),
+                   panel.grid.major = element_blank(),
+                   strip.background = element_blank(),
+                   strip.text.x = element_text(angle=45),
+                   panel.border = element_rect(colour = "black", fill = NA)) 
 
 # plot:: SVType FREQ ####
 plt_svtype_fun <- function(SVType="DEL",include_title=T,bin_wid=1000000){
@@ -68,16 +72,19 @@ plt_svtype_fun <- function(SVType="DEL",include_title=T,bin_wid=1000000){
       alFr_title <- if(include_title) paste("Structural Variant:",SVType) else NULL
       plt_del <- ggplot(in_del,aes(x=genoPOS))+annotate('rect',xmin=sum_GRChX$StartPos[seq(2,nrow(sum_GRChX),2)],
                                                         xmax=sum_GRChX$ToTLEN[seq(2,nrow(sum_GRChX),2)],ymin=0,ymax=2,alpha=0.2)+
-        geom_histogram(binwidth = bin_wid,aes(fill = CHROM))+
+        geom_histogram(binwidth = bin_wid,aes(fill = CHROM,color = CHROM),alpha=0.5)+
+        stat_bin(aes(y=ifelse(..count.. > 0, ..count.., ""),color = CHROM), binwidth=bin_wid, geom="point", size=3,alpha=0.5)+
         scale_x_continuous(limits = c(0,max(sum_GRChX$ToTLEN)),expand = c(0, 0),name=NULL, breaks=sum_GRChX$StartPos, labels=sum_GRChX$CHROM)+
         labs(y="Counts",title=alFr_title)+
         scale_fill_manual(values=rep(c("red","black"),length(sum_GRChX$CHROM)/2),breaks=sum_GRChX$CHROM,labels=NULL,guide='none')+
+        scale_color_manual(values=rep(c("red","black"),length(sum_GRChX$CHROM)/2),breaks=sum_GRChX$CHROM,labels=NULL,guide='none')+
         scale_y_continuous(expand = c(0, 0),breaks= function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1))))) +
         theme_bw()+theme(
           panel.grid.minor = element_blank(),
           panel.border = element_blank(),
           panel.background = element_blank(),
           axis.text.x = element_text(angle = 45, vjust = 0.5, hjust=1)) 
+      
       plt_del
     }}else{
       if(all(toupper(SVType) %in% c("DEL","DUP","INS","BND"))){
@@ -87,12 +94,15 @@ plt_svtype_fun <- function(SVType="DEL",include_title=T,bin_wid=1000000){
         alFr_title <- paste("Structural Variant:",SVType);names(alFr_title) <- SVType
         plt_del <- ggplot(in_del,aes(x=genoPOS))+annotate('rect',xmin=sum_GRChX$StartPos[seq(2,nrow(sum_GRChX),2)],
                                                           xmax=sum_GRChX$ToTLEN[seq(2,nrow(sum_GRChX),2)],ymin=0,ymax=2,alpha=0.2)+
-          geom_histogram(binwidth = bin_wid,aes(fill = CHROM))+
+          # geom_histogram(binwidth = bin_wid,aes(fill = CHROM))+
+          geom_histogram(binwidth = bin_wid,aes(fill = CHROM,color = CHROM),alpha=0.5)+
+          stat_bin(aes(y=ifelse(..count.. > 0, ..count.., ""),color = CHROM), binwidth=bin_wid, geom="point", size=3,alpha=0.5)+
           
           facet_wrap(svtype~.,ncol = 1,labeller = labeller(svtype=alFr_title))+
           scale_x_continuous(limits = c(0,max(sum_GRChX$ToTLEN)),expand = c(0, 0),name=NULL, breaks=sum_GRChX$StartPos, labels=sum_GRChX$CHROM)+
           labs(y="Counts",title=NULL)+
           scale_fill_manual(values=rep(c("red","black"),length(sum_GRChX$CHROM)/2),breaks=sum_GRChX$CHROM,labels=NULL,guide='none')+
+          scale_color_manual(values=rep(c("red","black"),length(sum_GRChX$CHROM)/2),breaks=sum_GRChX$CHROM,labels=NULL,guide='none')+
           scale_y_continuous(expand = c(0, 0),breaks= function(x) unique(floor(pretty(seq(0, (max(x) + 1) * 1.1))))) +
           theme_bw()+theme(
             panel.grid.minor = element_blank(),
@@ -110,13 +120,13 @@ plt_bnd <- plt_svtype_fun("BND")
 plt_all <- plt_svtype_fun(c("DEL","DUP","INS","BND"),bin_wid=1000000)
 
 # save plots ####
-ggsave(plt_allelFreq,file='./foo_freq.jpeg')
+ggsave(plt_allelFreq,file='./foo_freq.jpeg',width = 9,height = 3)
 
 # Individual Structural Variants 
-ggsave("foo.pdf",plt_del,width = 8,height = 3)
+ggsave("foo.pdf",plt_del,width = 9,height = 3)
 # library("gridExtra")
 # ggsave("foo4.pdf", arrangeGrob(plt_del,plt_dup,plt_ins,plt_bnd,ncol=1),width = 8,height = 3)
 # Freq of Structural Variants
 # all Structural Variants 
-ggsave(plt_all,file='./foo_grid.jpeg',width = 9,height = 3)
+ggsave(plt_all,file='./foo_grid.jpeg',width = 8,height = 3)
 
