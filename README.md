@@ -107,7 +107,7 @@ mv *.csv ../myoutput
 mv *.vcf ../myoutput
 ```
 
-### Gene/Diesease ontology and Pathways analysis and plotting
+### Gene/Disease ontology and Pathways analysis and plotting
 
 This module supports the enrichment analysis of Disease Ontology (DO) (Schriml et al. 2011), Network of Cancer Gene (A. et al. 2016) and Disease Gene Network (DisGeNET) (Janet et al. 2015). In addition, several visualization methods were provided by enrichplot to help interpreting enrichment and disease ontology results.
 
