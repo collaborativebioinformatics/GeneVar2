@@ -181,23 +181,33 @@ server <- function(input, output, session) {
       seqlevels(vcf.o) = paste0('chr', seqlevels(vcf.o))
     }
 
-    ## annotate gene overlapped by SVs
+    ## annotate ## if the scripts are not in the current directory, try in a 'R' folder (e.g. when running from the repo's root)
+    scripts.dir = ''
+    if(!file.exists('annotate_genes.R')){
+      scripts.dir = 'R/'
+    }
+    #gene overlapped by SVs
     source('annotate_genes.R')
+    source(paste0(scripts.dir, 'annotate_genes.R'))
     vcf.o = annotate_genes(vcf.o, genc)
 
     ## annotate frequency
     source('annotate_frequency.R')
+    source(paste0(scripts.dir, 'annotate_frequency.R'))
     vcf.o = annotate_frequency(vcf.o, gnomad)
 
     ## annotate known clinical SVs
     source('annotate_known_clinical_SVs.R')
+    source(paste0(scripts.dir, 'annotate_known_clinical_SVs.R'))
     vcf.o = annotate_known_clinical_SVs(vcf.o, clinsv)
 
     ## clinical ranks, to order the SVs and select top 5 for example
     source('annotate_clinical_score.R')
+    source(paste0(scripts.dir, 'annotate_known_clinical_SVs.R'))
     vcf.o = annotate_clinical_score(vcf.o,genc)
 
     ## write annotated VCF
+    meta(header(vcf.o))$fileformat = "VCFv4.1"
     writeVcf(vcf.o, file=out.vcf)
 
     ## write tables
