@@ -1,4 +1,4 @@
-##fileDate=20211026
+##fileDate=20210604
 ##INFO=<ID=END,Number=1,Type=Integer,Description="End coordinate">
 ##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="SV length (bp)">
 ##INFO=<ID=AC,Number=1,Type=Integer,Description="Allele count (1:heterozygous, 2:homozygous)">

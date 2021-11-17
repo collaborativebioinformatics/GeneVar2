@@ -7,11 +7,11 @@ annotate_genes <- function(vcf.o, genc){
   genc = subset(genc, type=='CDS')
 
   gene.ol = suppressWarnings(findOverlaps(vcf.o, genc)) %>% as.data.frame %>%
-    mutate(gene_id=genc$gene_id[subjectHits],
+    dplyr::mutate(gene_id=genc$gene_id[subjectHits],
            gene_name=genc$gene_name[subjectHits],
            type=genc$type[subjectHits]) %>%
     group_by(queryHits) %>%
-    summarize(gene_name=paste(unique(sort(gene_name)), collapse='|'))
+    summarize(gene_name=paste(unique(sort(gene_name)), collapse='|'), gene_id=paste(unique(sort(gene_id)), collapse='|')) # nolint
 
   ## IDEA: we could only keep SVs that overlap a gene to reduce the amount
   ## of variants to analyze in the next modules

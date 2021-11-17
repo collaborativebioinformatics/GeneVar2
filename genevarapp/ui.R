@@ -36,6 +36,11 @@ ui <- dashboardPage(
       multiple = TRUE,
       width = "100%"
     ),
+      numericInput("pvalue",
+                        "p-value",
+                        value = 0.1),
+    textInput('svtype.for.annotation', 'SV type for gene annotation (e.g., DUP)', ''),
+    textInput('chr.for.annotation', 'SV chromosome for gene annotation (e.g., chr12)', ''),
     actionButton(
       "submit",
       "Anotate",
@@ -44,13 +49,16 @@ ui <- dashboardPage(
       class = "btn btn-primary"
       # )
     ),
+   #textOutput('fileselected'),
     #splitLayout(
       downloadButton('downloadvcf', 'Download annotated VCF'),
       downloadButton('downloadcsv', 'Download annotated CSV'),
-      downloadButton('downloadPlot', 'Download Plots')
+      # downloadButton('downloadPlot', 'Download Plots'),
+      downloadButton('downloadZip', 'Download Zip')
    # )
     ##
   ),
+
   dashboardBody(
     htmlOutput('title'),
     fluidRow(

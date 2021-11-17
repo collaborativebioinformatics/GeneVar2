@@ -6,6 +6,7 @@ library(shinydashboard)
 library(Rsamtools)
 library(GenomicRanges)
 library(stringdist)
+library(reticulate)
 
 message('local files')
 message(list.files())
@@ -44,12 +45,12 @@ overlapVarsGenes <- function(vars.df, genes.df){
     group_by(variant_id, gene_id, gene_name, transcript_id, type) %>%
     summarize(exon_number=paste(sort(unique(exon_number)), collapse=';'))
   gene.var = var.gene.df %>%
-      group_by(variant_id, type) %>%
+    group_by(variant_id, type) %>%
     summarize(exon_number=ifelse(any(exon_number!=''),
                                  paste0(sort(unique(exon_number)), collapse='|'),
                                  '')) %>%
-      mutate(elt_type=ifelse(exon_number!='', paste0(type, '(', exon_number, ')'), type)) %>%
-      select(-type)
+    mutate(elt_type=ifelse(exon_number!='', paste0(type, '(', exon_number, ')'), type)) %>%
+    select(-type)
   merge(gene.var, vars.df) %>%
     group_by(chr, start, end, variant_id, size, type, af, clinical_sv, clinical_snv) %>%
     summarize(gene_impact=paste(sort(unique(elt_type)), collapse=';')) %>% ungroup
@@ -144,10 +145,10 @@ server <- function(input, output, session) {
   ## dynamic tables
   output$vars_table <- renderDataTable(
     datatable(dtify(selVars()),
-    filter='top',
-    rownames=FALSE,
-    escape=FALSE,
-    options=list(pageLength=15, searching=TRUE)))
+              filter='top',
+              rownames=FALSE,
+              escape=FALSE,
+              options=list(pageLength=15, searching=TRUE)))
   ## Graph
   output$af_plot = renderPlot({
     df = selVars()
@@ -161,109 +162,116 @@ server <- function(input, output, session) {
     shinyjs::toggleState("submit", !is.null(input$file) && input$file != "")
   })
 
-  output$text1 <- renderText({
-    paste0(input$file)
-  })
-  output$text2 <- renderText({
-    readSVvcf(paste0(input$file$datapath), out.fmt='vcf', keep.ids=TRUE)
-  })
 
 
-  dataset <- reactive({
-    req(input$file$datapath)
-    ## read VCF
-    suppressWarnings(suppressMessages(library(sveval)))
-    suppressWarnings(suppressMessages(library(GenomicRanges)))
-    vcf.o = readSVvcf(input$file$datapath, out.fmt='vcf', keep.ids=TRUE)
+  # dataset <- reactive({
+  #   in.vcf =  paste0(input$file)
+  #   annot.rdata = 'annotation_data.RData'
+  #   out.vcf = 'clinical-sv-annotated.vcf'
+  #   out.csv = 'clinical-sv-table.csv'
+  #   system(paste("Rscript annotate_vcf.R",in.vcf,annot.rdata,out.vcf,out.csv,sep = " "))
+  #
+  #   file.create("input_location.txt")
+  #   writeLines(input$file$datapath, "input_location.txt")
+  #   source_python('retrieve.py')
+  #   ## gene annotation from csv
+  #
+  #   system(paste("Rscript GeneAnnotationFromCSV.R clinical-sv-table.csv",input$pvalue,input$svtype.for.annotation,input$chr.for.annotation,sep=" "))
+  #
+  # })
 
-    ## make sure chromosomes are in the form 'chrX'
-    if(all(!grepl('chr', seqlevels(vcf.o)))){
-      seqlevels(vcf.o) = paste0('chr', seqlevels(vcf.o))
-    }
-
-    ## annotate ## if the scripts are not in the current directory, try in a 'R' folder (e.g. when running from the repo's root)
-    scripts.dir = ''
-    if(!file.exists('annotate_genes.R')){
-      scripts.dir = 'R/'
-    }
-    #gene overlapped by SVs
-    source('annotate_genes.R')
-    source(paste0(scripts.dir, 'annotate_genes.R'))
-    vcf.o = annotate_genes(vcf.o, genc)
-
-    ## annotate frequency
-    source('annotate_frequency.R')
-    source(paste0(scripts.dir, 'annotate_frequency.R'))
-    vcf.o = annotate_frequency(vcf.o, gnomad)
-
-    ## annotate known clinical SVs
-    source('annotate_known_clinical_SVs.R')
-    source(paste0(scripts.dir, 'annotate_known_clinical_SVs.R'))
-    vcf.o = annotate_known_clinical_SVs(vcf.o, clinsv)
-
-    ## clinical ranks, to order the SVs and select top 5 for example
-    source('annotate_clinical_score.R')
-    source(paste0(scripts.dir, 'annotate_known_clinical_SVs.R'))
-    vcf.o = annotate_clinical_score(vcf.o,genc)
-
-    ## write annotated VCF
-    meta(header(vcf.o))$fileformat = "VCFv4.1"
-    writeVcf(vcf.o, file=out.vcf)
-
-    ## write tables
-    svs <- tibble(gene=info(vcf.o)$GENE,
-                  variant_id=names(vcf.o),
-                  chr=as.character(seqnames(vcf.o)),
-                  start=start(vcf.o),
-                  end=end(vcf.o),
-                  size=abs(unlist(lapply(info(vcf.o)$SVLEN, '[', 1))),
-                  frequency=info(vcf.o)$AF,
-                  svtype=info(vcf.o)$SVTYPE,
-                  clinsv=info(vcf.o)$CLINSV,
-                  clinrk=info(vcf.o)$CLINRK) %>%
-      arrange(clinrk)
-    file.create("input_location.txt")
-    fileConn<-base::file(out.dir)
-    writeLines(input$file$datapath, "input_location.txt")
-    close(fileConn)
-    source_python('retrieve.py')
-    return(svs)
-  })
-
-  output$newvcf <- renderDataTable({
-    dataset()
-  })
-  vcf.o <- readSVvcf("clinical-sv-annotated.vcf", out.fmt='vcf', keep.ids=TRUE)
+  # output$newvcf <- renderDataTable({
+  #   dataset()
+  # })
+  #vcf.o <- readSVvcf("clinical-sv-annotated.vcf", out.fmt='vcf', keep.ids=TRUE)
   # vcf.o <- readVcf("clinical-sv-annotated.vcf")
   # vr.vcf <- makeVRangesFromGRanges(vcf.o)
 
   observeEvent(input$submit, {
     updateTabsetPanel(session = session, inputId = "tabs", selected = "Annotated")
+    withProgress(message = 'In progress', value = 0, {
+    in.vcf = paste0(input$file$datapath)
+    annot.rdata = 'annotation_data.RData'
+    out.vcf = 'clinical-sv-annotated.vcf'
+    out.csv = 'clinical-sv-table.csv'
+    incProgress(0.05, detail = "5% complete")
+    system(paste("Rscript annotate_vcf.R",in.vcf,annot.rdata,out.vcf,out.csv,sep = " "))
+    incProgress(0.5, detail = "50% complete")
+    file.create("input_location.txt")
+    writeLines(input$file$datapath, "input_location.txt")
+    source_python('retrieve.py')
+    incProgress(0.75, detail = "75% complete")
+    ## gene annotation from csv
+
+    system(paste("Rscript GeneAnnotationFromCSV.R clinical-sv-table.csv",input$pvalue,input$svtype.for.annotation,input$chr.for.annotation,sep=" "))
+    incProgress(1, detail = "Ready to download")
+    })
   })
+
+  # eventReactive(input$submit, {
+  #   in.vcf = input$file
+  #   annot.rdata = 'annotation_data.RData'
+  #   out.vcf = 'clinical-sv-annotated.vcf'
+  #   out.csv = 'clinical-sv-table.csv'
+  #   system(paste("Rscript annotate_vcf.R",in.vcf,annot.rdata,out.vcf,out.csv,sep = " "))
+  #
+  #   file.create("input_location.txt")
+  #   writeLines(input$file$datapath, "input_location.txt")
+  #   source_python('retrieve.py')
+  #   ## gene annotation from csv
+  #
+  #   system(paste("Rscript GeneAnnotationFromCSV.R clinical-sv-table.csv",input$pvalue,input$svtype.for.annotation,input$chr.for.annotation,sep=" "))
+  #
+  # })
 
   output$downloadvcf <- downloadHandler(
     filename = function() {
-      paste(input$file, '_annotated', '.vcf', sep='')
+      paste0(input$file, '_annotated', '.vcf')
     },
     content = function(con) {
-      writeVcf(vcf.o, con)
+      file.copy("clinical-sv-annotated.vcf", con, overwrite=TRUE)
+      #writeVcf(vcf.o, con)
     }
   )
 
   output$downloadcsv <- downloadHandler(
     filename = function() {
-      paste(input$file, '_annotated', '.csv', sep='')
+      paste0(input$file, '_annotated', '.csv')
     },
     content = function(con) {
-      write.csv(dataset(),con)
+      file.copy("clinical-sv-table.csv", con, overwrite=TRUE)
+     # write.csv(dataset(),con)
     }
   )
 
-  output$downloadPlot <- downloadHandler(
-    filename = function() { paste(input$file, '.png', sep='')},
-    content = function(file) {
-      file.copy("output.png", file, overwrite=TRUE)
-    }
+  # output$downloadPlot <- downloadHandler(
+  #   filename = function() { paste0(input$file, '.png')},
+  #   content = function(con) {
+  #     file.copy("output.png", con, overwrite=TRUE)
+  #   }
+  # )
+  output$downloadZip <- downloadHandler(
+    filename = function(){
+      paste0(input$file,"_annotated.zip")
+    },
+    content = function(con){
+      # tmpdir <- tempdir()
+      #setwd(tempdir())
+      filesToSave <- c(
+        "clinical-sv-annotated.vcf",
+        "clinical-sv-table.csv",
+        "output.png",
+        list.files(pattern = paste0("^",input$chr.for.annotation,"_",input$svtype.for.annotation), full.names=TRUE)
+      ) #List to hold paths to your files in shiny
+      #output$fileselected <- renderText({
+      #  paste0('You have selected: ', list.files(pattern = "^c" ))
+      #})
+      #Put all file paths inside filesToSave...
+      #file.copy("li.zip", con, overwrite=TRUE)
+      zip(zipfile=con, files = filesToSave)
+    },
+    contentType = "application/zip"
   )
-  ##---------------------------
+
+
 }
