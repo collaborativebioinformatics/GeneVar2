@@ -130,6 +130,16 @@ server <- function(input, output, session) {
   output$gnomad_url = renderText({
     return(as.character(a('gnomAD', href=paste0('https://gnomad.broadinstitute.org/gene/', geneName()), target='_blank')))
   })
+  output$genevar_example = renderText({
+    as.character(  '  Search by gene name, gene id (ENSG...), or transcript ID (ENST...):
+                 Examples:
+                 DSCAM
+                 ENSG00000171587.15
+                 ENST00000400454.6
+               ')
+  })
+
+
   ## boxes
   output$sv_box <- renderInfoBox({
     infoBox("SVs", nrow(selVars()), icon=icon("dna"), color="blue")
@@ -187,7 +197,7 @@ server <- function(input, output, session) {
   # vcf.o <- readVcf("clinical-sv-annotated.vcf")
   # vr.vcf <- makeVRangesFromGRanges(vcf.o)
 
-  observeEvent(input$submit, {
+  clinicalsv <- eventReactive(input$submit, {
     updateTabsetPanel(session = session, inputId = "tabs", selected = "Annotated")
     withProgress(message = 'In progress', value = 0, {
     in.vcf = paste0(input$file$datapath)
@@ -205,9 +215,22 @@ server <- function(input, output, session) {
 
     system(paste("Rscript GeneAnnotationFromCSV.R clinical-sv-table.csv",input$pvalue,input$svtype.for.annotation,input$chr.for.annotation,sep=" "))
     incProgress(1, detail = "Ready to download")
-    })
-  })
 
+    })
+    read.csv("clinical-sv-table.csv")
+    # output$clinicalsvtable <- renderUI({
+    #   # this UI will show a plot only if "Using JS" is clicked
+    #   if (input$submit > 0)
+    #     # the margin-top attribute is just to put the plot lower in the page
+    #     div(style = "margin-top:800px", renderDataTable(
+    #       read.csv("clinical-sv-table.csv")
+    #     ))
+    # })
+  })
+  output$clinicalsvtable <- renderDataTable({
+    datatable(clinicalsv(),
+    options = list(scrollX=TRUE, scrollCollapse=TRUE))
+  })
   # eventReactive(input$submit, {
   #   in.vcf = input$file
   #   annot.rdata = 'annotation_data.RData'

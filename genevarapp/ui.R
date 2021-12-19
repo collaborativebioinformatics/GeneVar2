@@ -19,11 +19,12 @@ ui <- dashboardPage(
   dashboardHeader(title='GeneVar'),
   dashboardSidebar(
     textInput('gene_search', 'Gene', ''),
-    div(p(' Search by gene name, gene id (ENSG...), or transcript ID (ENST...)'),
-        p(' Examples:'),
-        p('  DSCAM'),
-        p('  ENSG00000171587.15'),
-        p('  ENST00000400454.6')),
+    textOutput('genevar_example'),
+    # div(p('   Search by gene name, gene id (ENSG...), or transcript ID (ENST...)'),
+    #     p('   Examples:'),
+    #     p('   DSCAM'),
+    #     p('   ENSG00000171587.15'),
+    #     p('   ENST00000400454.6')),
     checkboxGroupInput('svtypes', "SV type", svtypes, svtypes),
     numericInput('size.min', 'Minimum SV size (bp)', 0, 0),
     numericInput('size.max', 'Maximum SV size (bp)', svsize.max, svsize.max),
@@ -74,6 +75,15 @@ ui <- dashboardPage(
     dataTableOutput('vars_table'),
     hr(),
     h2('Allele frequency distribution'),
-    plotOutput('af_plot')
+    plotOutput('af_plot'),
+    dataTableOutput('clinicalsvtable')
+     # bsModal("modalExample", "Your plot", "submit", size = "large",tableOutput("clinicalsvtable"),downloadButton('downloadcsv', 'Download'))
   )
+
+
+
+  # dashboardBody(
+  #   uiOutput("clinicalsvtable")
+  # )
 )
+

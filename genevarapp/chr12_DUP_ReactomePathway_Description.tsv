@@ -1,0 +1,4 @@
+OntologyID	Description	GeneRatio	pvalue	p.adjust	qvalue
+R-HSA-6809371	Formation of the cornified envelope	28/395	2.05126004282296e-14	2.19074572573492e-11	2.17433564539234e-11
+R-HSA-420499	Class C/3 (Metabotropic glutamate/pheromone receptors)	13/395	4.52713832715475e-10	2.41749186670063e-07	2.39938331339202e-07
+R-HSA-6805567	Keratinization	28/395	4.95207248581899e-09	1.76293780495156e-06	1.74973227832271e-06
