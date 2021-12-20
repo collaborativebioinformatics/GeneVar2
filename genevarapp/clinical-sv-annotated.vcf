@@ -1,5 +1,5 @@
 ##fileformat=VCFv4.1
-##fileDate=20211219
+##fileDate=20211220
 ##INFO=<ID=END,Number=1,Type=Integer,Description="End coordinate">
 ##INFO=<ID=SVLEN,Number=1,Type=Integer,Description="SV length (bp)">
 ##INFO=<ID=AC,Number=1,Type=Integer,Description="Allele count (1:heterozygous, 2:homozygous)">

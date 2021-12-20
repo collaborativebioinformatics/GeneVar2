@@ -2,7 +2,7 @@
 
 ###################################################################################
 # File: GeneAnnotationFromCSV.R
-# Aim: Take the list of genes and annotate them based on human disease ontology & disease gene-network and pathways like Reactome and KEGG  
+# Aim: Take the list of genes and annotate them based on human disease ontology & disease gene-network and pathways like Reactome and KEGG
 # Author: Rupesh Kesharwani
 # Last update: Oct 12, 2021
 # Copyright (c) 2021 Kesharwani RK
@@ -12,7 +12,7 @@
 ##    Hackathon 2021    ##
 ##    2021 Oct 10-13    ##
 ##      GeneVar2        ##
-##      SV vcf/csv      ## 
+##      SV vcf/csv      ##
 ##########################
 
 args = commandArgs(TRUE)
@@ -79,8 +79,8 @@ listofgene <- listgene[,1]
 
 ## Covert list of genes to entrezID
 genelist2convertID <- function(listofgene, fromType, toType){
-  id <- suppressMessages(suppressWarnings(bitr(listofgene, fromType=fromType, 
-                                               toType=toType, OrgDb="org.Hs.eg.db", 
+  id <- suppressMessages(suppressWarnings(bitr(listofgene, fromType=fromType,
+                                               toType=toType, OrgDb="org.Hs.eg.db",
                                                drop = TRUE)))
   ### convert as charecter vector
   id2 = as.character(id[,2])
@@ -91,7 +91,7 @@ genelist2convertID <- function(listofgene, fromType, toType){
 }
 
 cat("converting list of gene SYMBOL to ENTREZ ID...\n")
-listEntrezID<-genelist2convertID(listofgene = listofgene, fromType = GeneIDtype, 
+listEntrezID<-genelist2convertID(listofgene = listofgene, fromType = GeneIDtype,
                                  toType = 'ENTREZID')
 
 ## function to create GO/DO enriched output (txt)
@@ -148,61 +148,66 @@ results <- list()
 ## gene Enrichment analysis (only Disease ontology as this is clinical data)
 enrichedGene <- function (listEntrezID, showCategory=20, chrom, svtype){
   ## enrichent analysis
-  enDO <- DOSE::enrichDO(listEntrezID, readable = T, pvalueCutoff = pvalueCutoff, 
+  enDO <- DOSE::enrichDO(listEntrezID, readable = T, pvalueCutoff = pvalueCutoff,
                          qvalueCutoff = 0.1, minGSSize = 1)
   results[[1]] <- enDO
-  endgn <- DOSE::enrichDGN(listEntrezID, readable = T, pvalueCutoff = pvalueCutoff, 
+  endgn <- DOSE::enrichDGN(listEntrezID, readable = T, pvalueCutoff = pvalueCutoff,
                            minGSSize = 1, qvalueCutoff = 0.1)
   results[[2]] <- endgn
   ## enrich plots1
   if(as.double(summary(as.data.frame(enDO)$geneID)[1]) > 0) {
-    bar_plot <- barplot(enDO, showCategory=showCategory) + 
-      ggtitle("Higher level of Disease Ontology") 
-    ggsave(paste(chrom, svtype,'genesDiseaseOntology_bar_plot.png', sep="_"), width = 16, 
+    bar_plot <- barplot(enDO, showCategory=showCategory) +
+      ggtitle("Higher level of Disease Ontology")
+    ggsave(paste(chrom, svtype,'genesDiseaseOntology_bar_plot.png', sep="_"), width = 16,
            height = 10, bar_plot)
+    saveRDS(bar_plot, "plot_1.rds")
   } else {
     cat("Note: bar_plot can't be plotted as no enrichDO found. \n")
   }
   ## enrich plots2
-  if(as.double(summary(as.data.frame(endgn)$geneID)[1]) > 0) 
+  if(as.double(summary(as.data.frame(endgn)$geneID)[1]) > 0)
      {
        dot_plot <- enrichplot::dotplot(endgn, showCategory=showCategory, font.size = 6) + ggtitle("Disease associations from DisGeNET")
        edox <- DOSE::setReadable(endgn, 'org.Hs.eg.db', 'ENTREZID')
        #cnet_plot <- cnetplot(edox, colorEdge = TRUE, categorySize="pvalue") + ggtitle("Top 5 Category")
        #cnet_plot <- cnet_plot+theme(plot.title = element_text(hjust=0.7))
-       cnet_plot <- cnetplot(edox, color_category='firebrick', color_gene='steelblue', 
+       cnet_plot <- cnetplot(edox, color_category='firebrick', color_gene='steelblue',
         categorySize="pvalue") + ggtitle("Top 5 Category")
-       ggsave(paste(chrom, svtype,'genesDiseaseOntology_dot_plot.png', sep="_"), width = 14, 
+       ggsave(paste(chrom, svtype,'genesDiseaseOntology_dot_plot.png', sep="_"), width = 14,
               height = 8 , dot_plot)
-       ggsave(paste(chrom, svtype,'genesDiseaseOntology_cnet_plot.png', sep="_"), width = 14, 
+       ggsave(paste(chrom, svtype,'genesDiseaseOntology_cnet_plot.png', sep="_"), width = 14,
               height = 8 , cnet_plot)
+       saveRDS(dot_plot, "plot_2.rds")
+       saveRDS(cnet_plot, "plot_3.rds")
   } else {
     cat("Note: dot_plot can't be plotted as no enrichDGN found. \n")
   }
-  
+
   ## pathway analysis
-  reactomePath <- enrichPathway(listEntrezID, pvalueCutoff = pvalueCutoff, 
+  reactomePath <- enrichPathway(listEntrezID, pvalueCutoff = pvalueCutoff,
                                 readable = T, qvalueCutoff = 0.1, minGSSize = 1)
   results[[3]] <- reactomePath
-  keggpath <- enrichKEGG(gene= listEntrezID, pvalueCutoff = pvalueCutoff, 
+  keggpath <- enrichKEGG(gene= listEntrezID, pvalueCutoff = pvalueCutoff,
                          use_internal_data = T, minGSSize = 1, qvalueCutoff = 0.1)
   results[[4]] <- keggpath
   ## pathway plots1
   if(as.double(summary(as.data.frame(reactomePath)$geneID)[1]) > 0) {
-    reactomeplot <-enrichplot::dotplot(reactomePath, showCategory=showCategory) + 
+    reactomeplot <-enrichplot::dotplot(reactomePath, showCategory=showCategory) +
       ggtitle("ReactomePathway")
-    ggsave(paste(chrom, svtype,'reactomeplot_dot_plot.png', sep="_"), width = 14, 
+    ggsave(paste(chrom, svtype,'reactomeplot_dot_plot.png', sep="_"), width = 14,
            height = 8, reactomeplot)
+    saveRDS(reactomeplot, "plot_5.rds")
   } else {
     cat("Note: reactome_plot can't be plotted as no enrichPathway found. \n")
   }
-  
+
   ## pathway plots2
   if(as.double(summary(as.data.frame(keggpath)$geneID)[1]) > 0) {
-    keggplot <-enrichplot::dotplot(keggpath, showCategory=showCategory) + 
+    keggplot <-enrichplot::dotplot(keggpath, showCategory=showCategory) +
       ggtitle("KEGGPathway")
-    ggsave(paste(chrom, svtype,'keggplot_dot_plot.png', sep="_"), width = 14, 
+    ggsave(paste(chrom, svtype,'keggplot_dot_plot.png', sep="_"), width = 14,
            height = 8, keggplot)
+    saveRDS(keggplot, "plot_6.rds")
   } else {
     cat("Note: kegg_plot can't be plotted as no enrichKEGG found. \n")
   }
@@ -214,7 +219,7 @@ enrichedGene <- function (listEntrezID, showCategory=20, chrom, svtype){
 cat("Running enrichment and ontology...\n")
 
 ## run enrich and plot
-p <-enrichedGene(listEntrezID = listEntrezID, showCategory = 10, chrom = chrom, 
+p <-enrichedGene(listEntrezID = listEntrezID, showCategory = 10, chrom = chrom,
              svtype = svtype)
 
 
@@ -232,5 +237,6 @@ print.go.out(goResults = p[[3]], filename = paste(chrom,svtype,"ReactomePathway"
 print.go.out(goResults = p[[4]], filename = paste(chrom,svtype,"KEGGPathway", sep="_"))
 ##END
 #save(listEntrezID, p, print.go.out, enrichedGene, file = paste(chrom,svtype,"GeneOntology.RData", sep="_"))
+
 cat("#Done, the results are generated in current dir.\n")
 

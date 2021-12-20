@@ -7,7 +7,7 @@ library(Rsamtools)
 library(GenomicRanges)
 library(stringdist)
 library(reticulate)
-
+library(cowplot)
 message('local files')
 message(list.files())
 
@@ -200,21 +200,41 @@ server <- function(input, output, session) {
   clinicalsv <- eventReactive(input$submit, {
     updateTabsetPanel(session = session, inputId = "tabs", selected = "Annotated")
     withProgress(message = 'In progress', value = 0, {
-    in.vcf = paste0(input$file$datapath)
-    annot.rdata = 'annotation_data.RData'
-    out.vcf = 'clinical-sv-annotated.vcf'
-    out.csv = 'clinical-sv-table.csv'
-    incProgress(0.05, detail = "5% complete")
-    system(paste("Rscript annotate_vcf.R",in.vcf,annot.rdata,out.vcf,out.csv,sep = " "))
-    incProgress(0.5, detail = "50% complete")
-    file.create("input_location.txt")
-    writeLines(input$file$datapath, "input_location.txt")
-    source_python('retrieve.py')
-    incProgress(0.75, detail = "75% complete")
-    ## gene annotation from csv
+      in.vcf = paste0(input$file$datapath)
+      annot.rdata = 'annotation_data.RData'
+      out.vcf = 'clinical-sv-annotated.vcf'
+      out.csv = 'clinical-sv-table.csv'
+      incProgress(0.05, detail = "5% complete")
+      system(paste("Rscript annotate_vcf.R",in.vcf,annot.rdata,out.vcf,out.csv,sep = " "))
+      incProgress(0.5, detail = "50% complete")
+      file.create("input_location.txt")
+      writeLines(input$file$datapath, "input_location.txt")
+      source_python('retrieve.py')
+      incProgress(0.75, detail = "75% complete")
+      ## gene annotation from csv
 
-    system(paste("Rscript GeneAnnotationFromCSV.R clinical-sv-table.csv",input$pvalue,input$svtype.for.annotation,input$chr.for.annotation,sep=" "))
-    incProgress(1, detail = "Ready to download")
+      system(paste("Rscript GeneAnnotationFromCSV.R clinical-sv-table.csv",input$pvalue,input$svtype.for.annotation,input$chr.for.annotation,sep=" "))
+
+#
+#       output$clinicalsv_plot <- renderPlot({
+#         png.names <- substr(list.files(pattern = "png$", full.names=TRUE),3,100)
+#         png.names <- png.names[which(png.names!="output.png")]
+#         rl = lapply(png.names, png::readPNG)
+#         gl = lapply(rl, grid::rasterGrob)
+#         gridExtra::grid.arrange(grobs=gl,ncol=1)
+#       }, width = 1000)
+#       output$clinicalsv_plot_1 <- renderPlot({
+#       base64enc::dataURI(file=png.names[[1]], mime="image/png")
+# })
+
+      output$clinicalsv_plot <- renderPlot({
+        rds.names <- substr(list.files(pattern = "rds$", full.names=TRUE),3,100)
+        rl = lapply(rds.names, readRDS)
+        plot_grid(plotlist = rl,ncol = 1)
+        # gl = lapply(rl, ggplotGrob)
+        # gridExtra::grid.arrange(grobs=gl)
+      },height = 1500)
+      incProgress(1, detail = "Ready to download")
 
     })
     read.csv("clinical-sv-table.csv")
@@ -227,10 +247,12 @@ server <- function(input, output, session) {
     #     ))
     # })
   })
-  output$clinicalsvtable <- renderDataTable({
+  output$clinicalsv_table <- renderDataTable({
     datatable(clinicalsv(),
-    options = list(scrollX=TRUE, scrollCollapse=TRUE))
+              options = list(scrollX=TRUE, scrollCollapse=TRUE))
   })
+
+
   # eventReactive(input$submit, {
   #   in.vcf = input$file
   #   annot.rdata = 'annotation_data.RData'
@@ -263,7 +285,7 @@ server <- function(input, output, session) {
     },
     content = function(con) {
       file.copy("clinical-sv-table.csv", con, overwrite=TRUE)
-     # write.csv(dataset(),con)
+      # write.csv(dataset(),con)
     }
   )
 
@@ -284,7 +306,7 @@ server <- function(input, output, session) {
         "clinical-sv-annotated.vcf",
         "clinical-sv-table.csv",
         "output.png",
-        list.files(pattern = paste0("^",input$chr.for.annotation,"_",input$svtype.for.annotation), full.names=TRUE)
+        list.files(pattern = paste0("^[",input$chr.for.annotation,"_",input$svtype.for.annotation,"]png$"), full.names=TRUE)
       ) #List to hold paths to your files in shiny
       #output$fileselected <- renderText({
       #  paste0('You have selected: ', list.files(pattern = "^c" ))

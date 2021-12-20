@@ -1,7 +1,7 @@
 library(shiny)
 library(sveval)
 library(VariantAnnotation)
-library(shinyBS)
+
 
 ## --------------------------------------
 #### launch app locally

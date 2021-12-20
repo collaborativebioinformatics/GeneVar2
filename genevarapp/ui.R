@@ -61,22 +61,32 @@ ui <- dashboardPage(
   ),
 
   dashboardBody(
-    htmlOutput('title'),
-    fluidRow(
-      ## A static infoBox
-      infoBoxOutput("sv_box"),
-      infoBoxOutput("path_sv_box"),
-      infoBoxOutput("path_snv_box")
-    ),
-    shiny::htmlOutput('omim_url', class='btn btn-default action-button shiny-bound-input'),
-    shiny::htmlOutput('gtex_url', class='btn btn-default action-button shiny-bound-input'),
-    shiny::htmlOutput('gnomad_url', class='btn btn-default action-button shiny-bound-input'),
-    hr(),
-    dataTableOutput('vars_table'),
-    hr(),
-    h2('Allele frequency distribution'),
-    plotOutput('af_plot'),
-    dataTableOutput('clinicalsvtable')
+    tabsetPanel(type = "tabs",
+                tabPanel("Genevar",
+                htmlOutput('title'),
+                fluidRow(
+                  ## A static infoBox
+                  infoBoxOutput("sv_box"),
+                  infoBoxOutput("path_sv_box"),
+                  infoBoxOutput("path_snv_box")
+                ),
+                shiny::htmlOutput('omim_url', class='btn btn-default action-button shiny-bound-input'),
+                shiny::htmlOutput('gtex_url', class='btn btn-default action-button shiny-bound-input'),
+                shiny::htmlOutput('gnomad_url', class='btn btn-default action-button shiny-bound-input'),
+                hr(),
+                dataTableOutput('vars_table'),
+                hr(),
+                h2('Allele frequency distribution'),
+                plotOutput('af_plot')),
+                tabPanel("ClinicalSV",
+                         dataTableOutput('clinicalsv_table'),
+                         hr(),
+                         plotOutput('clinicalsv_plot')
+                         )
+
+
+    )
+
      # bsModal("modalExample", "Your plot", "submit", size = "large",tableOutput("clinicalsvtable"),downloadButton('downloadcsv', 'Download'))
   )
 
