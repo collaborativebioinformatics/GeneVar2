@@ -65,6 +65,8 @@ In addition a number of tables are provided to download including Disease Ontolo
 
 Finally, a number of plots are also provided to download including KEGG pathway, Disease Ontology, and Disease associations from DisGeNET.
 
+## Computational Resources / Operation
+GeneVar2 is a simple web application that does not demand any special computational resources. It can run on any PC or laptop which support git, R, and a web browser with minimal computational power. However, for ease and heavy large VCF file upload and analysis one can use cloud based service such as DNAnexus. Please refere to [documentation](https://documentation.dnanexus.com/getting-started/tutorials/developer-tutorials/web-app-let-tutorials/r-shiny-example-web-app). 
 
 ## Installation and Quick Start
 For users interested in annotating their own vcf files without using the web application, the following R scripts are available.  First install the required packages in R.
