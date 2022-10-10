@@ -78,7 +78,7 @@ if(!"easypackages" %in% row.names(installed.packages())){
   library(easypackages, character.only = TRUE, quietly = TRUE)
 }
 pkgs=c("shiny","tippy","shinythemes", "tidyverse", "tidygraph", "clusterProfiler","org.Hs.eg.db","DOSE","ggnewscale","cowplot","tidyverse","plyr","ReactomePA","reactome.db","reactome.db", 
-"KEGG.db","enrichplot","dplyr","GenomicRanges", "rtracklayer", "VariantAnnotation", "tidyr", "stringdist")
+"KEGG.db","enrichplot","dplyr","GenomicRanges", "rtracklayer", "VariantAnnotation", "tidyr", "stringdist", "nlme")
 suppressWarnings(suppressMessages(easypackages::packages(pkgs, prompt = FALSE)))
 ```
 
